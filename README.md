@@ -14,7 +14,7 @@ Make sure you have installed:
 1. Clone this repository:
     ```bash
     git clone https://github.com/anggasaputra25/EdiBuk.git
-    cd repository-name
+    cd EdiBuk
 2. Install Depedencies:
     ```bash
     flutter pub get
@@ -23,6 +23,5 @@ Make sure you have installed:
     flutter run
 
 ## Project Structure
-    ```bash
     lib/
     ├── main.dart  # Application entry point
