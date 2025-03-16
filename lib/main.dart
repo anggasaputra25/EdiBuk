@@ -1,5 +1,6 @@
+import 'package:edibuk/pages/bar.dart';
 import 'package:edibuk/pages/home.dart';
-// import 'package:edibuk/pages/login.dart';
+import 'package:edibuk/pages/search.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Urbanist'),
-      home: const HomePage(),
+      initialRoute: '/', 
+      routes: {
+        '/': (context) => const HomePage(), 
+        '/search': (context) => const SearchPage(), 
+        '/bar': (context) => const Bar(), 
+      },
     );
   }
 }

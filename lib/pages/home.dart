@@ -1,3 +1,5 @@
+import 'package:edibuk/pages/bar.dart';
+import 'package:edibuk/pages/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
@@ -40,27 +42,34 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    Container(  
-                      decoration: BoxDecoration(  
-                        color: Colors.white, 
-                        shape: BoxShape.circle, 
-                        border: Border.all(  
-                            color: Color.fromARGB(20, 6, 14, 0), 
-                          ),
-                        ),  
-                      child: IconButton(  
-                        icon: const Icon(CupertinoIcons.bell),  
-                        onPressed: () {},  
-                        iconSize: 24, 
-                        padding: EdgeInsets.zero, 
-                      ),  
-                    ),  
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Color.fromARGB(20, 6, 14, 0),
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(CupertinoIcons.bell),
+                        onPressed: () {},
+                        iconSize: 24,
+                        padding: EdgeInsets.zero,
+                      ),
+                    ),
+
                   ],
                 ),
                 const SizedBox(height: 16),  
                   TextField(
+                    readOnly: true, 
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Bar()),
+                      );
+                    },
                     decoration: InputDecoration(
-                      hintText: 'Cari musik',
+                      hintText: 'Cari buku',
                       prefixIcon: const Icon(CupertinoIcons.search),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -111,10 +120,21 @@ class _HomePageState extends State<HomePage> {
         type: BottomNavigationBarType.fixed, 
         currentIndex: _selectedIndex,
         onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
+          if (index != _selectedIndex) { 
+            setState(() {
+              _selectedIndex = index;
+            });
+            if (index == 0) {
+              Navigator.pushReplacementNamed(context, '/'); 
+            } else if (index == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SearchPage()),
+              );
+            }
+          }
         },
+
         items: const [
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: ''),
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.search), label: ''),
@@ -183,7 +203,8 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center, 
-                    crossAxisAlignment: CrossAxisAlignment.start,                    children: [
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
                         items[index][0], 
                         maxLines: 1,
