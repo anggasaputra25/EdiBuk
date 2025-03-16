@@ -1,3 +1,4 @@
+import 'package:edibuk/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,199 +12,196 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   int _selectedIndex = 1;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: const Text(
-          'Pencarian',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: Color.fromARGB(20, 6, 14, 0),
-              ),
-            ),
-            child: IconButton(
-              icon: Stack(
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    body: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(), // Tambahkan physics scroll
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(CupertinoIcons.bell),
-                  Positioned(
-                    top: 2,
-                    right: 2,
-                    child: Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF6467F6), 
-                        shape: BoxShape.circle,
-                      ),
+                  const Text(
+                    'Pencarian',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.black12),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(CupertinoIcons.bell),
+                      onPressed: () {},
+                      iconSize: 24,
+                      padding: EdgeInsets.zero,
                     ),
                   ),
                 ],
               ),
-              onPressed: () {},
-            ),
-          ),
-
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: ListView(
-          children: [
-            const SizedBox(height: 10),
-            // Search Bar
-            TextField(
-              decoration: InputDecoration(
-                prefixIcon: const Icon(CupertinoIcons.search, color: Colors.grey),
-                hintText: "Cari musik",
-                filled: true,
-                fillColor: Colors.grey.shade200,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+              const SizedBox(height: 16),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Cari buku',
+                  prefixIcon: const Icon(CupertinoIcons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(20, 6, 14, 0), 
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder( 
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(20, 6, 14, 0), 
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder( 
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(20, 6, 14, 0), 
+                    ),
+                  ),
+                  filled: false,
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-
-            // Terpopuler Juli
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Terpopuler Juli",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text("Lihat Semua", style: TextStyle(color: Colors.grey)),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 140,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildPopularItem('assets/oasis.png', 'Stop Crying...', 'Oasis'),
-                  _buildPopularItem('assets/hindia1.png', 'Berdansalah...', 'Hindia'),
-                  _buildPopularItem('assets/hindia2.png', 'Ramai Sepi...', 'Hindia'),
-                  _buildPopularItem('assets/dewa19.png', 'Kangen', 'Dewa 19'),
+                  const Text(
+                    "Terpopuler Juli",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text("Lihat Semua", style: TextStyle(color: Colors.grey)),
+                  ),
                 ],
               ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Kategori Musik
-            const Text(
-              "Jelajahi Kategori Musik",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-
-            GridView.count(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              childAspectRatio: 1.8,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              children: [
-                _buildCategoryItem('Pop', 'assets/pop.png'),
-                _buildCategoryItem('Rock', 'assets/rock.png'),
-                _buildCategoryItem('Hip-Hop', 'assets/hiphop.png'),
-                _buildCategoryItem('Jazz', 'assets/jazz.png'),
-                _buildCategoryItem('Classical', 'assets/classical.png'),
-                _buildCategoryItem('Blues', 'assets/blues.png'),
-                _buildCategoryItem('Dance', 'assets/dance.png'),
-                _buildCategoryItem('Country', 'assets/country.png'),
-                _buildCategoryItem('Reggae', 'assets/reggae.png'),
-              ],
-            ),
-
-          ],
+              const SizedBox(height: 0),
+              SizedBox(
+                height: 140,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 4,
+                  itemBuilder: (context, index) {
+                    final items = [
+                      ['assets/oasis.png', 'Stop Crying...', 'Oasis'],
+                      ['assets/hindia1.png', 'Berdansalah...', 'Hindia'],
+                      ['assets/hindia2.png', 'Ramai Sepi...', 'Hindia'],
+                      ['assets/dewa19.png', 'Kangen', 'Dewa 19'],
+                    ];
+                    return Container(
+                      width: MediaQuery.of(context).size.width / 4, 
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: _buildPopularItem(items[index][0], items[index][1], items[index][2]),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                "Jelajahi Kategori Musik",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(), // Supaya grid tidak memiliki scroll sendiri
+                crossAxisCount: 3,
+                childAspectRatio: 1,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                children: [
+                  _buildCategoryItem('Pop', 'assets/pop.png'),
+                  _buildCategoryItem('Rock', 'assets/rock.png'),
+                  _buildCategoryItem('Hip-Hop', 'assets/hiphop.png'),
+                  _buildCategoryItem('Jazz', 'assets/jazz.png'),
+                  _buildCategoryItem('Classical', 'assets/classical.png'),
+                  _buildCategoryItem('Blues', 'assets/blues.png'),
+                  _buildCategoryItem('Dance', 'assets/dance.png'),
+                  _buildCategoryItem('Country', 'assets/country.png'),
+                  _buildCategoryItem('Reggae', 'assets/reggae.png'),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-      
-      // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          if (index != _selectedIndex) { 
-            setState(() {
-              _selectedIndex = index;
-            });
-            if (index == 0) {
-              Navigator.pushReplacementNamed(context, '/'); 
-            } else if (index == 1) {
-              Navigator.pushReplacementNamed(context, '/search');
-            }
+    ),
+    bottomNavigationBar: BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      currentIndex: _selectedIndex,
+      onTap: (index) {
+        if (index != _selectedIndex) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomePage()),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SearchPage()),
+            );
           }
-        },
+        }
+      },
+      items: const [
+        BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: ''),
+        BottomNavigationBarItem(icon: Icon(CupertinoIcons.search), label: ''),
+        BottomNavigationBarItem(icon: Icon(CupertinoIcons.music_note_list), label: ''),
+        BottomNavigationBarItem(icon: Icon(CupertinoIcons.person), label: ''),
+      ],
+      selectedItemColor: const Color(0xFF6467F6),
+      unselectedItemColor: Colors.grey.shade300,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      selectedFontSize: 0,
+      unselectedFontSize: 0,
+    ),
+  );
+}
 
-        items: const [
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.search), label: ''),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.music_note_list), label: ''),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.person), label: ''),
-        ],
-        selectedItemColor: const Color(0xFF6467F6),
-        unselectedItemColor: Colors.grey.shade300,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-      ),
-    );
-  }
-
-  // Widget untuk item terpopuler
   Widget _buildPopularItem(String image, String title, String artist) {
-    return Container(
-      width: 120,
-      margin: const EdgeInsets.only(right: 10),
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(image, height: 90, width: 120, fit: BoxFit.cover),
-          ),
-          const SizedBox(height: 5),
-          Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold)),
-          Text(artist, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.asset(image, height: 90, width: 120, fit: BoxFit.cover),
+        ),
+        const SizedBox(height: 5),
+        Text(title, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold)),
+        Text(artist, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+      ],
     );
   }
 
-  // Widget untuk kategori musik
   Widget _buildCategoryItem(String title, String image) {
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF6467F6),
         borderRadius: BorderRadius.circular(12),
       ),
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          const Spacer(),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(image, height: 40, width: 60, fit: BoxFit.cover),
-            ),
-          ),
+          const SizedBox(height: 8),
+          Image.asset(image, height: 60, width: 70, fit: BoxFit.cover),
         ],
       ),
     );

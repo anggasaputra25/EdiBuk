@@ -2,7 +2,6 @@ import 'package:edibuk/pages/bar.dart';
 import 'package:edibuk/pages/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_carousel_slider/carousel_slider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: Color.fromARGB(20, 6, 14, 0),
+                          color: const Color.fromARGB(20, 6, 14, 0),
                         ),
                       ),
                       child: IconButton(
@@ -56,49 +55,47 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.zero,
                       ),
                     ),
-
                   ],
                 ),
                 const SizedBox(height: 16),  
-                  TextField(
-                    readOnly: true, 
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Bar()),
-                      );
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Cari buku',
-                      prefixIcon: const Icon(CupertinoIcons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(20, 6, 14, 0), 
-                        ),
+                TextField(
+                  readOnly: true, 
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Bar()),
+                    );
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Cari buku',
+                    prefixIcon: const Icon(CupertinoIcons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(20, 6, 14, 0), 
                       ),
-                      focusedBorder: OutlineInputBorder( 
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(20, 6, 14, 0), 
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder( 
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: Color.fromARGB(20, 6, 14, 0), 
-                        ),
-                      ),
-                      filled: false,
                     ),
+                    focusedBorder: OutlineInputBorder( 
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(20, 6, 14, 0), 
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder( 
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(20, 6, 14, 0), 
+                      ),
+                    ),
+                    filled: false,
                   ),
-
+                ),
                 const SizedBox(height: 20),
                 _buildSectionTitle('Baru Diputar'),
-                _buildHorizontalList([
-                  ['Kita Ke Sana','Hindia'], 
-                  ['7 Years','Lukas Graham'], 
-                  ['Someone Like You','Adele']
+                _buildHorizontalSwiper([
+                  ['Kita Ke Sana', 'Hindia'], 
+                  ['7 Years', 'Lukas Graham'], 
+                  ['Someone Like You', 'Adele']
                 ]),
                 const SizedBox(height: 20),
                 _buildSectionTitle('Penulis Terpopuler'),
@@ -106,16 +103,15 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 20),
                 _buildSectionTitle('Buku Terpopuler'),
                 _buildVerticalList([
-                  ['Stop Crying Your Heart Out','Oasis'],
-                  ['Champagne Supernova','Oasis'],
-                  ['Wake Me Up When September Ends','Green Day'],
+                  ['Stop Crying Your Heart Out', 'Oasis'],
+                  ['Champagne Supernova', 'Oasis'],
+                  ['Wake Me Up When September Ends', 'Green Day'],
                 ]),
               ],
             ),
           ),
         ),
       ),
-      
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed, 
         currentIndex: _selectedIndex,
@@ -125,7 +121,10 @@ class _HomePageState extends State<HomePage> {
               _selectedIndex = index;
             });
             if (index == 0) {
-              Navigator.pushReplacementNamed(context, '/'); 
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
             } else if (index == 1) {
               Navigator.push(
                 context,
@@ -134,7 +133,6 @@ class _HomePageState extends State<HomePage> {
             }
           }
         },
-
         items: const [
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: ''),
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.search), label: ''),
@@ -145,10 +143,7 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.grey.shade300,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        selectedFontSize: 0, 
-        unselectedFontSize: 0, 
       ),
-
     );
   }
 
@@ -171,82 +166,90 @@ class _HomePageState extends State<HomePage> {
     );  
   }  
 
-  Widget _buildHorizontalList(List<List<String>> items) {  
+  Widget _buildHorizontalSwiper(List<List<String>> items) {
     return SizedBox(
-      height: 70,
-      child: CarouselSlider.builder(
+      height: 70, // Sesuaikan tinggi agar swiper terlihat proporsional
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
         itemCount: items.length,
-        slideBuilder: (index) {
+        padding: EdgeInsets.zero,
+        itemBuilder: (context, index) {
           return Container(
-            width: 120,
-            margin: const EdgeInsets.only(right: 16), 
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(  
-              color: Colors.transparent, 
-              borderRadius: BorderRadius.circular(12),  
-              border: Border.all(  
-                color: Color.fromARGB(20, 6, 14, 0), 
-              ),
-            ), 
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+            width: MediaQuery.of(context).size.width / 2, 
+            padding: const EdgeInsets.only(right: 10), 
+            child: Container(
+              width: 120,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(  
+                color: Colors.transparent, 
+                borderRadius: BorderRadius.circular(12),  
+                border: Border.all(
+                  color: const Color.fromARGB(20, 6, 14, 0),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center, 
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        items[index][0], 
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        items[index][1], 
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                    ],
+              ), 
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                )
-              ],
-            )
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center, 
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          items[index][0], 
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          items[index][1], 
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ),
           );
         },
-        enableAutoSlider: false,
-        viewportFraction: 0.6, 
-        initialPage: 0,
       ),
     );
   }
 
-  Widget _buildCircularList(List<String> items) {
-    return SizedBox(
-      height: 120,
-      child: CarouselSlider.builder(
-        slideBuilder: (index) {
-          return Column(
+Widget _buildCircularList(List<String> items) {
+  return SizedBox(
+    height: 100, // Sesuaikan tinggi agar rapi
+    child: ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: items.length,
+      padding: EdgeInsets.zero,
+      itemBuilder: (context, index) {
+        return Container(
+          width: MediaQuery.of(context).size.width / 4.6, 
+          padding: const EdgeInsets.only(right: 10), 
+          child: Column(
             children: [
               CircleAvatar(
                 radius: 30,
-                backgroundColor: Colors.grey.shade300,
+                backgroundColor: Colors.grey.shade300, // Ganti dengan gambar jika ada
               ),
               const SizedBox(height: 4),
               SizedBox(
@@ -263,15 +266,12 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ],
-          );
-        },
-        itemCount: items.length,
-        enableAutoSlider: false,
-        viewportFraction: 0.24,
-        initialPage: 0,
-      ),
-    );
-  }
+          ),
+        );
+      },
+    ),
+  );
+}
 
   Widget _buildVerticalList(List<List<String>> items) {
     return Column(
