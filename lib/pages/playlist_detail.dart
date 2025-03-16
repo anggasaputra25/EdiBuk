@@ -21,7 +21,6 @@ class PlaylistDetailPage extends StatefulWidget {
 }
 
 class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
-  int _selectedIndex = 2; 
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,12 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                       ),  
                       child: IconButton(  
                         icon: Icon(CupertinoIcons.arrow_left, color: Colors.grey.shade400),  
-                        onPressed: () {},  
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => const PlaylistPage()),  
+                          );
+                        },  
                         iconSize: 24,  
                         padding: EdgeInsets.zero,  
                       ),  
@@ -158,12 +162,8 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(  
         type: BottomNavigationBarType.fixed,   
-        currentIndex: _selectedIndex,  
+        currentIndex: 2,  
         onTap: (index) {  
-          if (index != _selectedIndex) {   
-            setState(() {  
-              _selectedIndex = index;  
-            });  
             if (index == 0) {  
               Navigator.push(  
                 context,  
@@ -180,7 +180,6 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                 MaterialPageRoute(builder: (context) => const PlaylistPage()),  
               );  
             }  
-          }  
         },  
         items: const [  
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: ''),  
