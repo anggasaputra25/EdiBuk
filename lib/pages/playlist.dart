@@ -221,7 +221,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
             size: 24,  
           ),  
         ),  
-        const SizedBox(width: 10),  
+        const SizedBox(width: 12),  
         const Expanded(  
           child: Text(  
             "Buku yang Disukai",  
