@@ -19,7 +19,7 @@ Widget build(BuildContext context) {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(), // Tambahkan physics scroll
+          physics: const BouncingScrollPhysics(), 
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -114,7 +114,7 @@ Widget build(BuildContext context) {
               const SizedBox(height: 10),
               GridView.count(
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(), // Supaya grid tidak memiliki scroll sendiri
+                physics: const NeverScrollableScrollPhysics(), 
                 crossAxisCount: 3,
                 childAspectRatio: 1,
                 crossAxisSpacing: 10,

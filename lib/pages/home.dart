@@ -168,7 +168,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildHorizontalSwiper(List<List<String>> items) {
     return SizedBox(
-      height: 70, // Sesuaikan tinggi agar swiper terlihat proporsional
+      height: 70, 
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: items.length,
@@ -236,7 +236,7 @@ class _HomePageState extends State<HomePage> {
 
 Widget _buildCircularList(List<String> items) {
   return SizedBox(
-    height: 100, // Sesuaikan tinggi agar rapi
+    height: 100, 
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: items.length,
@@ -249,7 +249,7 @@ Widget _buildCircularList(List<String> items) {
             children: [
               CircleAvatar(
                 radius: 30,
-                backgroundColor: Colors.grey.shade300, // Ganti dengan gambar jika ada
+                backgroundColor: Colors.grey.shade300, 
               ),
               const SizedBox(height: 4),
               SizedBox(
