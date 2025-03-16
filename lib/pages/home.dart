@@ -1,4 +1,5 @@
 import 'package:edibuk/pages/bar.dart';
+import 'package:edibuk/pages/playlist.dart';
 import 'package:edibuk/pages/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,19 +42,33 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: const Color.fromARGB(20, 6, 14, 0),
+                    Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(9),
+                            border: Border.all(color: Colors.black12),
+                          ),
+                          child: IconButton(
+                            icon: Icon(CupertinoIcons.bell, color: Colors.grey.shade400),
+                            onPressed: () {},
+                            iconSize: 24,
+                            padding: EdgeInsets.zero,
+                          ),
                         ),
-                      ),
-                      child: IconButton(
-                        icon: const Icon(CupertinoIcons.bell),
-                        onPressed: () {},
-                        iconSize: 24,
-                        padding: EdgeInsets.zero,
-                      ),
+                        Positioned(
+                          right: 14,
+                          top: 12,
+                          child: Container(
+                            width: 10,
+                            height: 10,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF6467F6),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -68,21 +83,27 @@ class _HomePageState extends State<HomePage> {
                   },
                   decoration: InputDecoration(
                     hintText: 'Cari buku',
-                    prefixIcon: const Icon(CupertinoIcons.search),
+                    hintStyle: TextStyle(
+                      color: Colors.grey.shade600, 
+                    ),
+                    prefixIcon: Icon(
+                      CupertinoIcons.search,
+                      color: Colors.grey.shade400, 
+                    ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(9),
                       borderSide: const BorderSide(
                         color: Color.fromARGB(20, 6, 14, 0), 
                       ),
                     ),
                     focusedBorder: OutlineInputBorder( 
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(9),
                       borderSide: const BorderSide(
                         color: Color.fromARGB(20, 6, 14, 0), 
                       ),
                     ),
                     enabledBorder: OutlineInputBorder( 
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(9),
                       borderSide: const BorderSide(
                         color: Color.fromARGB(20, 6, 14, 0), 
                       ),
@@ -93,19 +114,25 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 20),
                 _buildSectionTitle('Baru Diputar'),
                 _buildHorizontalSwiper([
-                  ['Kita Ke Sana', 'Hindia'], 
-                  ['7 Years', 'Lukas Graham'], 
-                  ['Someone Like You', 'Adele']
+                  ['assets/hindia1.png','Kita Ke Sana', 'Hindia'], 
+                  ['assets/hindia1.png','7 Years', 'Lukas Graham'], 
+                  ['assets/hindia1.png','Someone Like You', 'Adele']
                 ]),
                 const SizedBox(height: 20),
                 _buildSectionTitle('Penulis Terpopuler'),
-                _buildCircularList(['Hindia', 'Oasis', 'Green Day', 'Dewa 19', 'The Beatles']),
+                _buildCircularList([
+                  ['Hindia','assets/hindia1.png'], 
+                  ['Oasis','assets/oasis.png'], 
+                  ['Green Day','assets/hindia1.png'], 
+                  ['Dewa 19','assets/dewa19.png'], 
+                  ['The Beatles','assets/hindia1.png'],
+                  ]),
                 const SizedBox(height: 20),
                 _buildSectionTitle('Buku Terpopuler'),
                 _buildVerticalList([
-                  ['Stop Crying Your Heart Out', 'Oasis'],
-                  ['Champagne Supernova', 'Oasis'],
-                  ['Wake Me Up When September Ends', 'Green Day'],
+                  ['assets/oasis.png','Stop Crying Your Heart Out', 'Oasis'],
+                  ['assets/oasis.png','Champagne Supernova', 'Oasis'],
+                  ['assets/hindia1.png','Wake Me Up When September Ends', 'Green Day'],
                 ]),
               ],
             ),
@@ -130,6 +157,11 @@ class _HomePageState extends State<HomePage> {
                 context,
                 MaterialPageRoute(builder: (context) => const SearchPage()),
               );
+            } else if (index == 2) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PlaylistPage()),
+              );
             }
           }
         },
@@ -143,6 +175,8 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.grey.shade300,
         showSelectedLabels: false,
         showUnselectedLabels: false,
+        selectedFontSize: 0,
+        unselectedFontSize: 0,
       ),
     );
   }
@@ -175,14 +209,14 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
           return Container(
-            width: MediaQuery.of(context).size.width / 2, 
+            width: MediaQuery.of(context).size.width / 2.3, 
             padding: const EdgeInsets.only(right: 10), 
             child: Container(
               width: 120,
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(  
                 color: Colors.transparent, 
-                borderRadius: BorderRadius.circular(12),  
+                borderRadius: BorderRadius.circular(9),  
                 border: Border.all(
                   color: const Color.fromARGB(20, 6, 14, 0),
                 ),
@@ -190,12 +224,13 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(8),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4), 
+                    child: Image.asset(
+                      items[index][0],
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover, 
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -205,7 +240,7 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          items[index][0], 
+                          items[index][1], 
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -214,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Text(
-                          items[index][1], 
+                          items[index][2], 
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -234,44 +269,44 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-Widget _buildCircularList(List<String> items) {
-  return SizedBox(
-    height: 100, 
-    child: ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: items.length,
-      padding: EdgeInsets.zero,
-      itemBuilder: (context, index) {
-        return Container(
-          width: MediaQuery.of(context).size.width / 4.6, 
-          padding: const EdgeInsets.only(right: 10), 
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.grey.shade300, 
-              ),
-              const SizedBox(height: 4),
-              SizedBox(
-                width: 60,
-                child: Text(
-                  items[index],
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+  Widget _buildCircularList(List<List<String>> items) {
+    return SizedBox(
+      height: 100, 
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: items.length,
+        padding: EdgeInsets.zero,
+        itemBuilder: (context, index) {
+          return Container(
+            width: MediaQuery.of(context).size.width / 4.6, 
+            padding: const EdgeInsets.only(right: 10), 
+            child: Column(
+              children: [
+                CircleAvatar( 
+                  radius: 30,
+                  backgroundImage: AssetImage(items[index][1]),
+                ),
+                const SizedBox(height: 4),
+                SizedBox(
+                  width: 60,
+                  child: Text(
+                    items[index][0],
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-    ),
-  );
-}
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
 
   Widget _buildVerticalList(List<List<String>> items) {
     return Column(
@@ -281,12 +316,13 @@ Widget _buildCircularList(List<String> items) {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4), 
+                child: Image.asset(
+                  item[0],
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover, 
                 ),
               ),
               const SizedBox(width: 12),
@@ -295,7 +331,7 @@ Widget _buildCircularList(List<String> items) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item[0], 
+                      item[1], 
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -314,6 +350,13 @@ Widget _buildCircularList(List<String> items) {
                     ),
                   ],
                 ),
+              ),
+              IconButton(
+                icon: const Icon(CupertinoIcons.ellipsis_vertical),
+                iconSize: 24,
+                color: Colors.grey.shade400,
+                onPressed: () {
+                },
               ),
             ],
           ),

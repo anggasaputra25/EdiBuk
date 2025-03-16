@@ -32,17 +32,33 @@ class _BarState extends State<Bar> {
                     'Pencarian',
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Color.fromARGB(20, 6, 14, 0)),
-                    ),
-                    child: IconButton(
-                      icon: const Icon(CupertinoIcons.bell),
-                      onPressed: () {},
-                      iconSize: 24,
-                      padding: EdgeInsets.zero,
-                    ),
+                  Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9),
+                          border: Border.all(color: Colors.black12),
+                        ),
+                        child: IconButton(
+                          icon: Icon(CupertinoIcons.bell, color: Colors.grey.shade400),
+                          onPressed: () {},
+                          iconSize: 24,
+                          padding: EdgeInsets.zero,
+                        ),
+                      ),
+                      Positioned(
+                        right: 14,
+                        top: 12,
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF6467F6),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -50,21 +66,27 @@ class _BarState extends State<Bar> {
               TextField(
                 decoration: InputDecoration(
                   hintText: 'Cari buku',
-                  prefixIcon: const Icon(CupertinoIcons.search),
+                  hintStyle: TextStyle(
+                    color: Colors.grey.shade600, 
+                  ),
+                  prefixIcon: Icon(
+                    CupertinoIcons.search,
+                    color: Colors.grey.shade400, 
+                  ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(9),
                     borderSide: BorderSide(
                       color: Color.fromARGB(20, 6, 14, 0), 
                     ),
                   ),
                   focusedBorder: OutlineInputBorder( 
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(9),
                     borderSide: BorderSide(
                       color: Color.fromARGB(20, 6, 14, 0), 
                     ),
                   ),
                   enabledBorder: OutlineInputBorder( 
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(9),
                     borderSide: BorderSide(
                       color: Color.fromARGB(20, 6, 14, 0), 
                     ),
@@ -102,13 +124,14 @@ class _BarState extends State<Bar> {
                       contentPadding: const EdgeInsets.symmetric(horizontal: 0), 
                       leading: Padding(
                         padding: const EdgeInsets.only(left: 8), 
-                        child: const Icon(CupertinoIcons.search, size: 22),
+                        child: Icon(CupertinoIcons.search, size: 22, color: Colors.grey.shade400),
                       ),
                       title: Text(searchHistory[index]),
+                      titleTextStyle: TextStyle(color: Colors.grey.shade600),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 8), 
                         child: IconButton(
-                          icon: const Icon(CupertinoIcons.xmark, size: 20),
+                          icon: Icon(CupertinoIcons.xmark, size: 20, color: Colors.grey.shade400),
                           onPressed: () {
                             setState(() {
                               searchHistory.removeAt(index);

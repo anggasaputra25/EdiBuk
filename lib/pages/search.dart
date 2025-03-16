@@ -1,4 +1,5 @@
 import 'package:edibuk/pages/home.dart';
+import 'package:edibuk/pages/playlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ Widget build(BuildContext context) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -31,17 +32,33 @@ Widget build(BuildContext context) {
                     'Pencarian',
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.black12),
-                    ),
-                    child: IconButton(
-                      icon: const Icon(CupertinoIcons.bell),
-                      onPressed: () {},
-                      iconSize: 24,
-                      padding: EdgeInsets.zero,
-                    ),
+                  Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9),
+                          border: Border.all(color: Colors.black12),
+                        ),
+                        child: IconButton(
+                          icon: Icon(CupertinoIcons.bell, color: Colors.grey.shade400),
+                          onPressed: () {},
+                          iconSize: 24,
+                          padding: EdgeInsets.zero,
+                        ),
+                      ),
+                      Positioned(
+                        right: 14,
+                        top: 12,
+                        child: Container(
+                          width: 10,
+                          height: 10,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF6467F6),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -49,21 +66,27 @@ Widget build(BuildContext context) {
               TextField(
                 decoration: InputDecoration(
                   hintText: 'Cari buku',
-                  prefixIcon: const Icon(CupertinoIcons.search),
+                  hintStyle: TextStyle(
+                    color: Colors.grey.shade600, 
+                  ),
+                  prefixIcon: Icon(
+                    CupertinoIcons.search,
+                    color: Colors.grey.shade400, 
+                  ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(9),
                     borderSide: BorderSide(
                       color: Color.fromARGB(20, 6, 14, 0), 
                     ),
                   ),
                   focusedBorder: OutlineInputBorder( 
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(9),
                     borderSide: BorderSide(
                       color: Color.fromARGB(20, 6, 14, 0), 
                     ),
                   ),
                   enabledBorder: OutlineInputBorder( 
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(9),
                     borderSide: BorderSide(
                       color: Color.fromARGB(20, 6, 14, 0), 
                     ),
@@ -154,6 +177,11 @@ Widget build(BuildContext context) {
               context,
               MaterialPageRoute(builder: (context) => const SearchPage()),
             );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const PlaylistPage()),
+            );
           }
         }
       },
@@ -192,18 +220,25 @@ Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF6467F6),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(9),
       ),
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+      child: Stack(
         children: [
-          Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          Image.asset(image, height: 60, width: 70, fit: BoxFit.cover),
+          Align(
+            alignment: Alignment.bottomCenter, 
+            child: Image.asset(image, height: 60, width: 80, fit: BoxFit.cover),
+          ),
+          Positioned(
+            left: 4,
+            child: Text(
+              title,
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
         ],
       ),
     );
   }
+
 }
