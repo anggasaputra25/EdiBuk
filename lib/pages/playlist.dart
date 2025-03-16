@@ -1,4 +1,5 @@
-import 'package:edibuk/pages/home.dart';  
+import 'package:edibuk/pages/home.dart';
+import 'package:edibuk/pages/playlist_detail.dart';  
 import 'package:edibuk/pages/search.dart';  
 import 'package:flutter/cupertino.dart';  
 import 'package:flutter/material.dart';  
@@ -89,10 +90,11 @@ class _PlaylistPageState extends State<PlaylistPage> {
                   ],  
                 ),  
                 _buildVerticalList([  
-                  ['assets/oasis.png', 'Stop Crying Your Heart Out', 'Oasis'],  
-                  ['assets/oasis.png', 'Champagne Supernova', 'Oasis'],  
-                  ['assets/hindia1.png', 'Wake Me Up When September Ends', 'Green Day'],  
-                ]),  
+                  ['assets/oasis.png', 'Lagi Fokus', '12'],  
+                  ['assets/oasis.png', 'Belajar UTS', '7'],  
+                  ['assets/hindia1.png', 'Sad', '32'],  
+                  ['assets/hindia1.png', 'Self Improve', '9'],  
+                ], context),  
                 const SizedBox(height: 20),  
                 const Text(  
                   "Buku Yang Anda Sukai",  
@@ -147,61 +149,73 @@ class _PlaylistPageState extends State<PlaylistPage> {
     );  
   }  
 
-  Widget _buildVerticalList(List<List<String>> items) {  
-    return Column(  
-      children: items.map((item) {  
-        return Padding(  
-          padding: const EdgeInsets.symmetric(vertical: 8),  
-          child: Row(  
-            crossAxisAlignment: CrossAxisAlignment.center,  
-            children: [  
-              ClipRRect(  
-                borderRadius: BorderRadius.circular(4),   
-                child: Image.asset(  
-                  item[0],  
-                  width: 50,  
-                  height: 50,  
-                  fit: BoxFit.cover,   
-                ),  
-              ),  
-              const SizedBox(width: 12),  
-              Expanded(  
-                child: Column(  
-                  crossAxisAlignment: CrossAxisAlignment.start,  
-                  children: [  
-                    Text(  
-                      item[1],   
-                      maxLines: 1,  
-                      overflow: TextOverflow.ellipsis,  
-                      style: const TextStyle(  
-                        fontSize: 14,  
-                        fontWeight: FontWeight.bold,  
-                      ),  
-                    ),  
-                    Text(  
-                      item[2],   
-                      maxLines: 1,  
-                      overflow: TextOverflow.ellipsis,  
-                      style: TextStyle(  
-                        fontSize: 12,  
-                        color: Colors.grey.shade600,  
-                      ),  
-                    ),  
-                  ],  
-                ),  
-              ),  
-              IconButton(  
-                icon: const Icon(CupertinoIcons.ellipsis_vertical),  
-                iconSize: 24,  
-                color: Colors.grey.shade400,  
-                onPressed: () {},  
-              ),  
-            ],  
-          ),  
-        );  
-      }).toList(),  
-    );  
-  }  
+  Widget _buildVerticalList(List<List<String>> items, BuildContext context) {
+    return Column(
+      children: items.map((item) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PlaylistDetailPage(
+                  imagePath: item[0],
+                  playlistName: item[1],
+                  songCount: item[2],
+                ),
+              ),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: Image.asset(
+                    item[0],
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item[1],
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "Playlist • ${item[2]} Buku",
+                          style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.ellipsis_vertical),
+                  iconSize: 24,
+                  color: Colors.grey.shade400,
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
 
   Widget _buildPlayList(List<List<String>> items) {  
     return Row(  
@@ -210,7 +224,11 @@ class _PlaylistPageState extends State<PlaylistPage> {
         Container(  
           padding: const EdgeInsets.all(8),  
           decoration: BoxDecoration(  
-            color: const Color(0xFF6467F6),  
+            gradient: const LinearGradient(
+              colors: [Color(0xFF6467F6), Colors.white], 
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+            ),            
             borderRadius: BorderRadius.circular(9),  
           ),  
           width: 50,
