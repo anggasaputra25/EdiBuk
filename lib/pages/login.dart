@@ -1,4 +1,4 @@
-import 'package:edibuk/pages/main_page.dart';
+import 'package:edibuk/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -10,43 +10,20 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
+final supabase = Supabase.instance.client;
+
 class _LoginPageState extends State<LoginPage> {
   bool _isPasswordVisible = false;
-  final supabase = Supabase.instance.client;
+  String? _userId;
 
-  Future<void> signInWithGoogle() async {
-    try {
-      // Inisialisasi GoogleSignIn
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) {
-        print('Login dibatalkan');
-        return;
-      }
-
-      // Ambil autentikasi Google
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      final String? idToken = googleAuth.idToken;
-
-      if (idToken == null) {
-        print('Gagal mendapatkan ID Token dari Google');
-        return;
-      }
-
-      // Kirim ID Token ke Supabase untuk autentikasi
-      final response = await supabase.auth.signInWithIdToken(
-        provider: OAuthProvider.google,
-        idToken: idToken,
-      );
-
-      if (response.session != null) {
-        print('Login berhasil: ${response.session?.user.id}');
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
-      } else {
-        print('Login gagal: ${response.toString()}');
-      }
-    } catch (error) {
-      print('Error saat login: $error');
-    }
+  @override
+  void initState() {
+    super.initState();
+    supabase.auth.onAuthStateChange.listen((data) {
+      setState(() {
+        _userId = data.session?.user.id;
+      });
+    });
   }
 
   @override
@@ -128,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MainPage()),
+                  MaterialPageRoute(builder: (context) => HomePage()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -190,7 +167,59 @@ class _LoginPageState extends State<LoginPage> {
                 // Tombol Google Sign-In
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: signInWithGoogle, // Panggil fungsi login Google
+                    onPressed: () async {
+                      /// TODO: update the Web client ID with your own.
+                      ///
+                      /// Web Client ID that you registered with Google Cloud.
+                      const webClientId = '39551948215-5voa7thok925m2a8e824jgv9l7etpgbq.apps.googleusercontent.com';
+
+                      /// TODO: update the iOS client ID with your own.
+                      ///
+                      /// iOS Client ID that you registered with Google Cloud.
+                      // const iosClientId = 'my-ios.apps.googleusercontent.com';
+
+                      // Google sign in on Android will work without providing the Android
+                      // Client ID registered on Google Cloud.
+
+                      final GoogleSignIn googleSignIn = GoogleSignIn(
+                        //clientId: iosClientId,
+                        serverClientId: webClientId,
+                      );
+                      final googleUser = await googleSignIn.signIn();
+                      final googleAuth = await googleUser!.authentication;
+                      final accessToken = googleAuth.accessToken;
+                      final idToken = googleAuth.idToken;
+
+                      if (accessToken == null) {
+                        throw 'No Access Token found.';
+                      }
+                      if (idToken == null) {
+                        throw 'No ID Token found.';
+                      }
+
+                      // await supabase.auth.signInWithIdToken(
+                      //     provider: OAuthProvider.google,
+                      //     idToken: idToken,
+                      //     accessToken: accessToken,
+                      //   );
+
+                      // print('UserID: $_userId');
+                      try {
+                        await supabase.auth.signInWithIdToken(
+                          provider: OAuthProvider.google,
+                          idToken: idToken,
+                          accessToken: accessToken,
+                        );
+
+                        print(_userId);
+                        Navigator.pushReplacement(
+                          context, 
+                          MaterialPageRoute(builder: (context) => HomePage()), // Ganti dengan halaman utama Anda
+                        );
+                      } catch (e) {
+                        print('Error during sign-in: $e');
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                       shadowColor: Colors.transparent,

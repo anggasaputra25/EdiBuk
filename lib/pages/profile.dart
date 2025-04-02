@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:edibuk/pages/home.dart';
+import 'package:edibuk/pages/playlist.dart';
+import 'package:edibuk/pages/search.dart';
+import 'package:flutter/cupertino.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -8,7 +12,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  // int _selectedIndex = 0;
+  int _selectedIndex = 3;
   // void _onItemTapped(int index) {
   //   setState(() {
   //     _selectedIndex = index;
@@ -334,6 +338,50 @@ class _ProfileState extends State<Profile> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed, 
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          if (index != _selectedIndex) { 
+            setState(() {
+              _selectedIndex = index;
+            });
+            if (index == 0) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+            } else if (index == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SearchPage()),
+              );
+            } else if (index == 2) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PlaylistPage()),
+              );
+            } else if (index == 3) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Profile()),
+              );
+            }
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: ''),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.search), label: ''),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.music_note_list), label: ''),
+          BottomNavigationBarItem(icon: Icon(CupertinoIcons.person), label: ''),
+        ],
+        selectedItemColor: const Color(0xFF6467F6),
+        unselectedItemColor: Colors.grey.shade300,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        selectedFontSize: 0,
+        unselectedFontSize: 0,
       ),
       // bottomNavigationBar: BottomNavigationBar(
       //   currentIndex: _selectedIndex,
