@@ -31,15 +31,15 @@ class _ProfileState extends State<Profile> {
             Row(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(7),
+                  borderRadius: BorderRadius.circular(9),
                   child: Image.network(
                     'https://i.pinimg.com/736x/3e/43/81/3e4381b778491865ef08b89d48c9366a.jpg',
-                    width: 44,
-                    height: 44,
+                    width: 50,
+                    height: 50,
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(width: 18),
+                SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -48,7 +48,7 @@ class _ProfileState extends State<Profile> {
                       fontSize: 18
                     ),),
                     Text('Developer', style: TextStyle(
-                      color: Colors.grey,
+                      color: Colors.grey.shade400,
                       fontWeight: FontWeight.w600,
                       fontSize: 13
                     ),),
@@ -59,8 +59,8 @@ class _ProfileState extends State<Profile> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0x2608060E), width: 1),
-                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: const Color.fromARGB(20, 6, 14, 0)),
+                    borderRadius: BorderRadius.circular(4),
                   ),
                   child: IconButton(
                     icon: Icon(Icons.more_vert, size: 20, color: Colors.black),
@@ -90,17 +90,17 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                       margin: EdgeInsets.only(right: 10), // Tambahkan margin untuk jarak antar item
                       decoration: BoxDecoration(
-                        border: Border.all(color: Color(0x2608060E), width: 1),
-                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: const Color.fromARGB(20, 6, 14, 0)),
+                        borderRadius: BorderRadius.circular(9),
                       ),
                       child: Row(
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(7),
+                            borderRadius: BorderRadius.circular(4),
                             child: Image.network(
                               'https://i.pinimg.com/736x/3e/43/81/3e4381b778491865ef08b89d48c9366a.jpg',
-                              width: 44,
-                              height: 44,
+                              width: 50,
+                              height: 50,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -115,7 +115,7 @@ class _ProfileState extends State<Profile> {
                               Text('Hello', style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,
-                                color: Colors.grey,
+                                color: Colors.grey.shade400,
                               )),
                             ],
                           )
@@ -132,17 +132,17 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                       margin: EdgeInsets.only(right: 10), // Tambahkan margin untuk jarak antar item
                       decoration: BoxDecoration(
-                        border: Border.all(color: Color(0x2608060E), width: 1),
-                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: const Color.fromARGB(20, 6, 14, 0)),
+                        borderRadius: BorderRadius.circular(9),
                       ),
                       child: Row(
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(7),
+                            borderRadius: BorderRadius.circular(4),
                             child: Image.network(
                               'https://i.pinimg.com/736x/3e/43/81/3e4381b778491865ef08b89d48c9366a.jpg',
-                              width: 44,
-                              height: 44,
+                              width: 50,
+                              height: 50,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -157,7 +157,7 @@ class _ProfileState extends State<Profile> {
                               Text('Hello', style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,
-                                color: Colors.grey,
+                                color: Colors.grey.shade400,
                               )),
                             ],
                           )
@@ -174,17 +174,17 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                       margin: EdgeInsets.only(right: 10), // Tambahkan margin untuk jarak antar item
                       decoration: BoxDecoration(
-                        border: Border.all(color: Color(0x2608060E), width: 1),
-                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: const Color.fromARGB(20, 6, 14, 0)),
+                        borderRadius: BorderRadius.circular(4),
                       ),
                       child: Row(
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(7),
+                            borderRadius: BorderRadius.circular(9),
                             child: Image.network(
                               'https://i.pinimg.com/736x/3e/43/81/3e4381b778491865ef08b89d48c9366a.jpg',
-                              width: 44,
-                              height: 44,
+                              width: 50,
+                              height: 50,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -199,7 +199,7 @@ class _ProfileState extends State<Profile> {
                               Text('Hello', style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,
-                                color: Colors.grey,
+                                color: Colors.grey.shade400,
                               )),
                             ],
                           )
@@ -387,7 +387,7 @@ class _ProfileState extends State<Profile> {
       //   currentIndex: _selectedIndex,
       //   onTap: _onItemTapped,
       //   selectedItemColor: Colors.blue,
-      //   unselectedItemColor: Colors.grey,
+      //   unselectedItemColor: Colors.grey.shade400,
       //   items: const [
       //     BottomNavigationBarItem(
       //       icon: Icon(Icons.home_outlined),

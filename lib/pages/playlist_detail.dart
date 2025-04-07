@@ -1,5 +1,6 @@
 import 'package:edibuk/pages/home.dart';
 import 'package:edibuk/pages/playlist.dart';
+import 'package:edibuk/pages/profile.dart';
 import 'package:edibuk/pages/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -179,7 +180,12 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                 context,  
                 MaterialPageRoute(builder: (context) => const PlaylistPage()),  
               );  
-            }  
+            } else if (index == 3) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Profile()),
+              );
+            }
         },  
         items: const [  
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: ''),  

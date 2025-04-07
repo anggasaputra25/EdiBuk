@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class MusicPlay extends StatefulWidget {
-  const MusicPlay({super.key});
+  final String imageUrl;
+  final String audio;
+  final String title;
+  final String author;
+  final String body;
+
+  const MusicPlay({
+    Key? key,
+    required this.imageUrl,
+    required this.audio,
+    required this.title,
+    required this.author,
+    required this.body,
+  }) : super(key: key);
 
   @override
   State<MusicPlay> createState() => _MusicPlayState();
@@ -20,15 +33,11 @@ class _MusicPlayState extends State<MusicPlay> {
     super.initState();
 
     _audioPlayer.onDurationChanged.listen((d) {
-      setState(() {
-        _duration = d;
-      });
+      setState(() => _duration = d);
     });
 
     _audioPlayer.onPositionChanged.listen((p) {
-      setState(() {
-        _position = p;
-      });
+      setState(() => _position = p);
     });
   }
 
@@ -36,12 +45,9 @@ class _MusicPlayState extends State<MusicPlay> {
     if (_isPlaying) {
       await _audioPlayer.pause();
     } else {
-      await _audioPlayer.play(
-          UrlSource("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"));
+      await _audioPlayer.play(UrlSource(widget.audio));
     }
-    setState(() {
-      _isPlaying = !_isPlaying;
-    });
+    setState(() => _isPlaying = !_isPlaying);
   }
 
   void _seekTo(double seconds) {
@@ -52,172 +58,158 @@ class _MusicPlayState extends State<MusicPlay> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(30),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Color(0x2608060E), width: 1),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back, size: 20, color: Colors.black),
-                      onPressed: () {
-                        print("Back click!");
-                      },
-                    ),
-                  ),
-                  Text("Sedang Diputar", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),),
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Color(0x2608060E), width: 1),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.more_vert, size: 20, color: Colors.black),
-                      onPressed: () {
-                        print("Menu clicked!");
-                      },
-                    ),
-                  ),
-                ],
+        padding: const EdgeInsets.all(30),
+        child: Column(
+          children: [
+            // Top Bar
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildBorderedIcon(Icons.arrow_back, () {
+                  Navigator.pop(context);
+                }),
+                const Text("Sedang Diputar", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
+                _buildBorderedIcon(Icons.more_vert, () {
+                  print("Menu clicked!");
+                }),
+              ],
+            ),
+            const SizedBox(height: 26),
+
+            // Cover Image
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.network(
+                widget.imageUrl,
+                height: 344,
+                fit: BoxFit.cover,
               ),
-              SizedBox(height: 26),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.network(
-                  height: 344,
-                  'https://i.pinimg.com/736x/3e/43/81/3e4381b778491865ef08b89d48c9366a.jpg',
-                  fit: BoxFit.cover,
+            ),
+            const SizedBox(height: 25),
+
+            // Info, Slider, Buttons
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildTitleAndFavorite(),
+                    _buildSlider(),
+                    _buildTimeInfo(),
+                    const SizedBox(height: 25),
+                    _buildControls(),
+                    const SizedBox(height: 25),
+                    const Text('Isi Buku', style: TextStyle(color: Colors.grey)),
+                    IconButton(
+                      icon: const Icon(Icons.keyboard_arrow_down, size: 30),
+                      color: Colors.grey,
+                      onPressed: () {},
+                    ),
+                    Text(
+                      widget.body,
+                      style: const TextStyle(color: Colors.grey),
+                      textAlign: TextAlign.justify,
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: 25),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Kita ke Sana", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),),
-                              Text("Hindia",  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.grey),),
-                            ],
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              isFavorite ? Icons.favorite : Icons.favorite_outline, 
-                              size: 24, 
-                              color: Colors.redAccent,
-                              // color: isFavorite ? Colors.redAccent : Colors.black,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                isFavorite = !isFavorite;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SliderTheme(
-                              data: SliderTheme.of(context).copyWith(
-                                activeTrackColor: Color(0xFF6467F6), // Warna track yang sudah terisi
-                                inactiveTrackColor: Color(0xFF6467F6).withOpacity(0.3), // Warna track yang belum terisi
-                                thumbColor: Color(0xFF6467F6), // Warna lingkaran (thumb)
-                                overlayColor: Color(0xFF6467F6).withOpacity(0.2), // Efek saat thumb ditekan
-                                trackHeight: 2.5, // Tinggi track lebih kecil
-                                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6), // Ukuran thumb lebih kecil
-                                overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
-                              ),
-                              child: Slider(
-                                value: _position.inSeconds.toDouble(),
-                                min: 0,
-                                max: _duration.inSeconds.toDouble(),
-                                onChanged: (value) {
-                                  _seekTo(value);
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "${_position.inMinutes}:${_position.inSeconds.remainder(60).toString().padLeft(2, '0')}",
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey),
-                          ),
-                          Text(
-                            "${_duration.inMinutes}:${_duration.inSeconds.remainder(60).toString().padLeft(2, '0')}",
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 25),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            color: Colors.grey,
-                            icon: Icon(Icons.skip_previous, size: 35),
-                            onPressed: () {
-                              print('Previous Clicked!');
-                            },
-                          ),
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: Color(0xFF6467F6),
-                            ),
-                            child: Center(
-                              child: IconButton(
-                                color: Colors.white,
-                                icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow, size: 35), // Reduce size if needed
-                                onPressed: _playPause,
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            color: Colors.grey,
-                            icon: Icon(Icons.skip_next, size: 35),
-                            onPressed: () {
-                              print('Previous Clicked!');
-                            },
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 25),
-                      Text('Isi Buku', style: TextStyle(color: Colors.grey)),
-                      IconButton(
-                        color: Colors.grey,
-                        icon: Icon(Icons.keyboard_arrow_down, size: 30),
-                        onPressed: () {
-                          print('Content Book Clicked!');
-                        },
-                      ),
-                      Text('Mengisahkan petualangan Monkey D Luffy, seorang anak laki-laki yang memiliki kemampuan tubuh elastis seperti karet setelah memakan Buah Iblis secara tidak disengaja. Luffy bersama kru bajak lautnya, yang dinamakan Bajak Laut Topi Jerami.', style: TextStyle(color: Colors.grey),)
-                    ],
-                  ),
-                ),
-              )
-            ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBorderedIcon(IconData icon, VoidCallback onPressed) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color(0x2608060E), width: 1),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: IconButton(
+        icon: Icon(icon, size: 20, color: Colors.black),
+        onPressed: onPressed,
+      ),
+    );
+  }
+
+  Widget _buildTitleAndFavorite() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(widget.title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
+            Text(widget.author,
+                style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.grey)),
+          ],
+        ),
+        IconButton(
+          icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_outline, size: 24, color: Colors.redAccent),
+          onPressed: () => setState(() => isFavorite = !isFavorite),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSlider() {
+    return SliderTheme(
+      data: SliderTheme.of(context).copyWith(
+        activeTrackColor: const Color(0xFF6467F6),
+        inactiveTrackColor: const Color(0xFF6467F6).withOpacity(0.3),
+        thumbColor: const Color(0xFF6467F6),
+        overlayColor: const Color(0xFF6467F6).withOpacity(0.2),
+        trackHeight: 2.5,
+        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
+        overlayShape: const RoundSliderOverlayShape(overlayRadius: 10),
+      ),
+      child: Slider(
+        value: _position.inSeconds.toDouble(),
+        min: 0,
+        max: _duration.inSeconds.toDouble(),
+        onChanged: _seekTo,
+      ),
+    );
+  }
+
+  Widget _buildTimeInfo() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _buildTimeText(_position),
+        _buildTimeText(_duration),
+      ],
+    );
+  }
+
+  Widget _buildTimeText(Duration time) {
+    final minutes = time.inMinutes;
+    final seconds = time.inSeconds.remainder(60).toString().padLeft(2, '0');
+    return Text('$minutes:$seconds',
+        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey));
+  }
+
+  Widget _buildControls() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(icon: const Icon(Icons.skip_previous, size: 35), color: Colors.grey, onPressed: () {}),
+        Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(color: const Color(0xFF6467F6), borderRadius: BorderRadius.circular(100)),
+          child: Center(
+            child: IconButton(
+              icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow, size: 35),
+              color: Colors.white,
+              onPressed: _playPause,
+            ),
           ),
         ),
+        IconButton(icon: const Icon(Icons.skip_next, size: 35), color: Colors.grey, onPressed: () {}),
+      ],
     );
   }
 }

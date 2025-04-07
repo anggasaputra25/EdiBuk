@@ -59,11 +59,11 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: "Masukkan Email",
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0x2608060E)),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(9),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0x2608060E)),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(9),
                 ),
                 contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
               ),
@@ -79,11 +79,11 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: "Masukkan Password",
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0x2608060E)),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(9),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0x2608060E)),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(9),
                 ),
                 contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                 suffixIcon: IconButton(
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                 backgroundColor: Color(0xFF6467F6),
                 minimumSize: Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(9),
                 ),
               ),
               child: Text(
@@ -139,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                       shadowColor: Colors.transparent,
                       side: BorderSide(color: Color(0x2608060E), width: 1),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(9),
                       ),
                     ),
                     child: Row(
@@ -225,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                       shadowColor: Colors.transparent,
                       side: BorderSide(color: Color(0x2608060E), width: 1),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(9),
                       ),
                     ),
                     child: Row(
