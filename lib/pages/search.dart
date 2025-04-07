@@ -14,17 +14,29 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {  
+  TextEditingController _searchController = TextEditingController();
+  String searchQuery = '';
+  List<Book> filteredBooks = [];
   int _selectedIndex = 1;  
   List<Book> books = [];  
   List<Category> categories = [];  
   Map<String, String> authorNames = {}; 
 
   @override  
-  void initState() {  
-    super.initState();  
-    fetchBooks();  
-    fetchCategories();  
-  }  
+  void initState() {
+    super.initState();
+    fetchBooks();
+    fetchCategories();
+
+    _searchController.addListener(() {
+      setState(() {
+        searchQuery = _searchController.text.toLowerCase();
+        filteredBooks = books
+            .where((book) => book.title.toLowerCase().contains(searchQuery))
+            .toList();
+      });
+    });
+  }
 
   Future<void> fetchBooks() async {  
     try {  
@@ -32,17 +44,20 @@ class _SearchPageState extends State<SearchPage> {
           .from('books')  
           .select('id, title, cover_image, audio, body, author_id, category_id, authors(name)'); // Fetching author name  
 
-      setState(() {  
-        books = List<Map<String, dynamic>>.from(response)  
-            .map((json) => Book.fromJson(json))  
-            .toList();  
+      setState(() {
+        books = List<Map<String, dynamic>>.from(response)
+            .map((json) => Book.fromJson(json))
+            .toList();
 
-        for (var item in response) {  
-          if (item['authors'] != null) {  
-            authorNames[item['author_id']] = item['authors']['name'];  
-          }  
-        }  
-      });  
+        filteredBooks = books;
+
+        for (var item in response) {
+          if (item['authors'] != null) {
+            authorNames[item['author_id']] = item['authors']['name'];
+          }
+        }
+      });
+
     } catch (e) {  
       print('Error fetching books: $e');  
     }  
@@ -116,8 +131,9 @@ class _SearchPageState extends State<SearchPage> {
                   ],  
                 ),  
                 const SizedBox(height: 16),  
-                TextField(  
-                  decoration: InputDecoration(  
+                  TextField(  
+                  controller: _searchController,
+                  decoration: InputDecoration(
                     hintText: 'Cari buku',  
                     hintStyle: TextStyle(color: Colors.grey.shade600),  
                     prefixIcon: Icon(CupertinoIcons.search, color: Colors.grey.shade400),  
@@ -155,9 +171,9 @@ class _SearchPageState extends State<SearchPage> {
                   height: 140,  
                   child: ListView.builder(  
                     scrollDirection: Axis.horizontal,  
-                    itemCount: books.length > 4 ? 4 : books.length,  
-                    itemBuilder: (context, index) {  
-                      final book = books[index];  
+                    itemCount: filteredBooks.length > 4 ? 4 : filteredBooks.length,
+                    itemBuilder: (context, index) {
+                      final book = filteredBooks[index];
                       final authorName = authorNames[book.authorId] ?? 'Unknown Author'; // Get author name  
                       return Container(  
                         width: MediaQuery.of(context).size.width / 4,  
