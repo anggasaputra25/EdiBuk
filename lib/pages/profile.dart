@@ -1,8 +1,10 @@
+import 'package:edibuk/pages/models.dart';
 import 'package:flutter/material.dart';
 import 'package:edibuk/pages/home.dart';
 import 'package:edibuk/pages/playlist.dart';
 import 'package:edibuk/pages/search.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -13,12 +15,32 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   int _selectedIndex = 3;
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //     print("Menu $_selectedIndex diklik");
-  //   });
-  // }
+  UserProfile? _userProfile;  
+
+  @override  
+  void initState() {  
+    super.initState();  
+    _fetchUserProfile();
+  }  
+
+  Future<void> _fetchUserProfile() async {  
+    UserProfile? profile = await getUserProfile();  
+    setState(() {  
+      _userProfile = profile;  
+    });  
+  }  
+
+  Future<UserProfile?> getUserProfile() async {  
+    final user = Supabase.instance.client.auth.currentUser;  
+
+    if (user == null) return null;  
+
+    return UserProfile(  
+      id: user.id,  
+      username: user.userMetadata?['name'] ?? user.email ?? 'Pengguna',  
+      profileImage: user.userMetadata?['picture'],  
+    );  
+  }  
 
   @override
   Widget build(BuildContext context) {
@@ -32,26 +54,33 @@ class _ProfileState extends State<Profile> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(9),
-                  child: Image.network(
-                    'https://i.pinimg.com/736x/3e/43/81/3e4381b778491865ef08b89d48c9366a.jpg',
+                  child: 
+                  Image.network(
+                    _userProfile?.profileImage ?? 'https://via.placeholder.com/50',  
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,
-                  ),
+                  )
                 ),
                 SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Mangde', style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18
-                    ),),
-                    Text('Developer', style: TextStyle(
-                      color: Colors.grey.shade400,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13
-                    ),),
+                    Text(  
+                      _userProfile?.username ?? 'Guest',  
+                      style: const TextStyle(  
+                        fontWeight: FontWeight.w700,  
+                        fontSize: 18,  
+                      ),  
+                    ), 
+                    Text(
+                      'Developer',
+                      style: TextStyle(
+                        color: Colors.grey.shade400,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
+                    ),
                   ],
                 ),
                 Spacer(),
@@ -383,32 +412,6 @@ class _ProfileState extends State<Profile> {
         selectedFontSize: 0,
         unselectedFontSize: 0,
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   currentIndex: _selectedIndex,
-      //   onTap: _onItemTapped,
-      //   selectedItemColor: Colors.blue,
-      //   unselectedItemColor: Colors.grey.shade400,
-      //   items: const [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home_outlined),
-      //       label: '',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.search),
-      //       label: '',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.music_note_outlined),
-      //       label: '',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person_outline),
-      //       label: '',
-      //     ),
-      //   ],
-      //   showSelectedLabels: false,
-      //   showUnselectedLabels: false,
-      // ),
     );
   }
 }

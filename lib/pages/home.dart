@@ -19,13 +19,22 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0; 
   List<Book> books = [];  
   List<Author> authors = []; 
+  String? username;
 
   @override
   void initState() {  
     super.initState();  
     fetchBooks(); 
     fetchAuthors(); 
-  }  
+    fetchUser(); 
+  }
+
+  void fetchUser() {
+    final user = Supabase.instance.client.auth.currentUser;
+    setState(() {
+      username = user?.userMetadata?['name'] ?? user?.email ?? 'Pengguna';
+    });
+  }
   Future<void> fetchBooks() async {
     try {
       final response = await Supabase.instance.client
@@ -77,10 +86,12 @@ class _HomePageState extends State<HomePage> {
                     Column(  
                       crossAxisAlignment: CrossAxisAlignment.start,  
                       children: [  
-                        const Text(  
-                          'Halo Mangde 👋',  
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),  
-                        ),  
+
+                        Text(
+                          'Halo ${username ?? ''} 👋',
+                          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+
                         Text(  
                           'Dengarkan bukumu hari ini!',  
                           style: TextStyle(color: Colors.grey.shade600),  
