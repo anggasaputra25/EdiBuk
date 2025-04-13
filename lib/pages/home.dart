@@ -1,6 +1,6 @@
 import 'package:edibuk/pages/bar.dart';
 import 'package:edibuk/pages/models.dart';
-import 'package:edibuk/pages/music_play.dart';
+import 'package:edibuk/pages/book_play.dart';
 import 'package:edibuk/pages/playlist.dart';
 import 'package:edibuk/pages/profile.dart';
 import 'package:edibuk/pages/search.dart';
@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                 context,
                 MaterialPageRoute(
                   builder:
-                      (context) => MusicPlay(
+                      (context) => BookPlay(
                         imageUrl: books[index].coverImage,
                         title: books[index].title,
                         author: books[index].authorName,
@@ -389,7 +389,7 @@ class _HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(
                     builder:
-                        (context) => MusicPlay(
+                        (context) => BookPlay(
                           imageUrl: book.coverImage,
                           title: book.title,
                           author: book.authorName,

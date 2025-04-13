@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-class MusicPlay extends StatefulWidget {
+class BookPlay extends StatefulWidget {
   final String imageUrl;
   final String audio;
   final String title;
   final String author;
   final String body;
 
-  const MusicPlay({
+  const BookPlay({
     Key? key,
     required this.imageUrl,
     required this.audio,
@@ -18,10 +18,10 @@ class MusicPlay extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<MusicPlay> createState() => _MusicPlayState();
+  State<BookPlay> createState() => _BookPlayState();
 }
 
-class _MusicPlayState extends State<MusicPlay> {
+class _BookPlayState extends State<BookPlay> {
   bool isFavorite = false;
   final AudioPlayer _audioPlayer = AudioPlayer();
   Duration _duration = Duration.zero;

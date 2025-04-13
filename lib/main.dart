@@ -1,5 +1,5 @@
 import 'package:edibuk/pages/login.dart';
-// import 'package:edibuk/pages/music_play.dart';
+// import 'package:edibuk/pages/book_play.dart';
 // import 'package:edibuk/pages/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

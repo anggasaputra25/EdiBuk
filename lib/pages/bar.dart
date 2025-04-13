@@ -1,5 +1,5 @@
 import 'package:edibuk/pages/models.dart';
-import 'package:edibuk/pages/music_play.dart';
+import 'package:edibuk/pages/book_play.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -237,7 +237,7 @@ class _BarState extends State<Bar> {
                                   context,
                                   MaterialPageRoute(
                                     builder:
-                                        (context) => MusicPlay(
+                                        (context) => BookPlay(
                                           imageUrl: book.coverImage,
                                           title: book.title,
                                           author: author.name,

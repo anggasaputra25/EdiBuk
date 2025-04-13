@@ -1,5 +1,6 @@
 import 'package:edibuk/pages/home.dart';
 import 'package:edibuk/pages/models.dart';
+import 'package:edibuk/pages/book_play.dart';
 import 'package:edibuk/pages/playlist.dart';
 import 'package:edibuk/pages/profile.dart';
 import 'package:edibuk/pages/search.dart';
@@ -38,12 +39,22 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
     try {
       final response = await Supabase.instance.client
           .from('playlist_book')
-          .select('book(id, title, image_cover, author(name))')
+          .select('books(id, title, cover_image, authors(name))')
           .eq('playlist_id', widget.playlistId);
 
       setState(() {
         books =
-            (response as List).map((e) => Book.fromJson(e['book'])).toList();
+            List<Map<String, dynamic>>.from(response).map((json) {
+              return Book.fromJson({
+                'id': json['books']['id'] ?? '',
+                'cover_image': json['books']['cover_image'] ?? '',
+                'title': json['books']['title'] ?? '',
+                'body': json['books']['body'] ?? '',
+                'audio': json['books']['audio'] ?? '',
+                'authors': {'name': json['books']['authors']?['name'] ?? ''},
+                'category_id': json['books']['category_id'] ?? '',
+              });
+            }).toList();
       });
     } catch (e) {
       print('Error fetching playlist book: $e');
@@ -256,51 +267,68 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
           items.map((book) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: Image.network(
-                      book.coverImage,
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          book.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => BookPlay(
+                            imageUrl: book.coverImage,
+                            title: book.title,
+                            author: book.authorName,
+                            audio: book.audio,
+                            body: book.body,
                           ),
-                        ),
-                        Text(
-                          book.authorName,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey.shade600,
-                          ),
-                        ),
-                      ],
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(CupertinoIcons.ellipsis_vertical),
-                    iconSize: 24,
-                    color: Colors.grey.shade400,
-                    onPressed: () {},
-                  ),
-                ],
+                  );
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: Image.network(
+                        book.coverImage,
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            book.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            book.authorName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(CupertinoIcons.ellipsis_vertical),
+                      iconSize: 24,
+                      color: Colors.grey.shade400,
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
             );
           }).toList(),

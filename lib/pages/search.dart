@@ -1,3 +1,4 @@
+import 'package:edibuk/pages/book_play.dart';
 import 'package:edibuk/pages/home.dart';
 import 'package:edibuk/pages/models.dart';
 import 'package:edibuk/pages/playlist.dart';
@@ -314,36 +315,59 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget _buildPopularItem(String imageUrl, String title, String author) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(9),
-          child: Image.network(
-            imageUrl,
-            height: 90,
-            width: 120,
-            fit: BoxFit.cover,
-            errorBuilder:
-                (context, error, stackTrace) =>
-                    const Icon(Icons.image_not_supported),
+  Widget _buildPopularItem(
+    String imageUrl,
+    String title,
+    String author,
+    String audio,
+    String body,
+  ) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) => BookPlay(
+                  imageUrl: imageUrl,
+                  title: title,
+                  author: author,
+                  audio: audio,
+                  body: body,
+                ),
           ),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        Text(
-          author,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-      ],
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(9),
+            child: Image.network(
+              imageUrl,
+              height: 90,
+              width: 120,
+              fit: BoxFit.cover,
+              errorBuilder:
+                  (context, error, stackTrace) =>
+                      const Icon(Icons.image_not_supported),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Text(
+            author,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
+          ),
+        ],
+      ),
     );
   }
 
