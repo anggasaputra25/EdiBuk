@@ -79,7 +79,10 @@ class Playlist {
       id: json['id'],
       name: json['name'],
       image: json['image'],
-      bookCount: (json['playlist_book'] as Map<String, dynamic>)['count'] ?? 0,
+      bookCount:
+          (json['playlist_book'] as List).isNotEmpty
+              ? (json['playlist_book'] as List)[0]['count'] ?? 0
+              : 0,
     );
   }
 }

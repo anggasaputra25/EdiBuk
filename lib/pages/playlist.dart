@@ -31,7 +31,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
 
       final response = await Supabase.instance.client
           .from('playlist')
-          .select('*, playlist_book(count)')
+          .select('id, name, image, playlist_book(count)')
           .eq('user_id', user.id);
 
       setState(() {
@@ -40,8 +40,9 @@ class _PlaylistPageState extends State<PlaylistPage> {
               response,
             ).map((json) => Playlist.fromJson(json)).toList();
       });
+      print('fetching playlist: $response');
     } catch (e) {
-      print('Error fetching authors: $e');
+      print('Error fetching playlist: $e');
     }
   }
 
@@ -218,11 +219,17 @@ class _PlaylistPageState extends State<PlaylistPage> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(4),
-                      child: Image.asset(
+                      child: Image.network(
                         playlist.image,
                         width: 50,
                         height: 50,
                         fit: BoxFit.cover,
+                        errorBuilder:
+                            (context, error, stackTrace) => Icon(
+                              Icons.broken_image,
+                              size: 50,
+                              color: Colors.grey,
+                            ),
                       ),
                     ),
                     const SizedBox(width: 12),

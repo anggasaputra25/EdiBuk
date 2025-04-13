@@ -37,12 +37,16 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(image: AssetImage('assets/logo_small.png'), width: 35, height: 35),
+                Image(
+                  image: AssetImage('assets/logo_small.png'),
+                  width: 35,
+                  height: 35,
+                ),
                 SizedBox(width: 10),
                 Text(
                   'EdiBuk',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-                )
+                ),
               ],
             ),
             SizedBox(height: 30),
@@ -65,7 +69,10 @@ class _LoginPageState extends State<LoginPage> {
                   borderSide: BorderSide(color: Color(0x2608060E)),
                   borderRadius: BorderRadius.circular(9),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 16,
+                ),
               ),
               keyboardType: TextInputType.emailAddress,
             ),
@@ -85,10 +92,15 @@ class _LoginPageState extends State<LoginPage> {
                   borderSide: BorderSide(color: Color(0x2608060E)),
                   borderRadius: BorderRadius.circular(9),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 16,
+                ),
                 suffixIcon: IconButton(
                   icon: Icon(
-                    _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
                   ),
                   onPressed: () {
                     setState(() {
@@ -135,7 +147,10 @@ class _LoginPageState extends State<LoginPage> {
                       print("Facebook clicked!");
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
                       shadowColor: Colors.transparent,
                       side: BorderSide(color: Color(0x2608060E), width: 1),
                       shape: RoundedRectangleBorder(
@@ -158,7 +173,11 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 15,
                           ),
                         ),
-                        Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                          color: Colors.black,
+                        ),
                       ],
                     ),
                   ),
@@ -171,7 +190,8 @@ class _LoginPageState extends State<LoginPage> {
                       /// TODO: update the Web client ID with your own.
                       ///
                       /// Web Client ID that you registered with Google Cloud.
-                      const webClientId = '39551948215-5voa7thok925m2a8e824jgv9l7etpgbq.apps.googleusercontent.com';
+                      const webClientId =
+                          '39551948215-5voa7thok925m2a8e824jgv9l7etpgbq.apps.googleusercontent.com';
 
                       /// TODO: update the iOS client ID with your own.
                       ///
@@ -213,15 +233,20 @@ class _LoginPageState extends State<LoginPage> {
 
                         print(_userId);
                         Navigator.pushReplacement(
-                          context, 
-                          MaterialPageRoute(builder: (context) => HomePage()), // Ganti dengan halaman utama Anda
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(),
+                          ), // Ganti dengan halaman utama Anda
                         );
                       } catch (e) {
                         print('Error during sign-in: $e');
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
                       shadowColor: Colors.transparent,
                       side: BorderSide(color: Color(0x2608060E), width: 1),
                       shape: RoundedRectangleBorder(
@@ -244,7 +269,11 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 15,
                           ),
                         ),
-                        Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                          color: Colors.black,
+                        ),
                       ],
                     ),
                   ),

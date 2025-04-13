@@ -68,7 +68,10 @@ class _MusicPlayState extends State<MusicPlay> {
                 _buildBorderedIcon(Icons.arrow_back, () {
                   Navigator.pop(context);
                 }),
-                const Text("Sedang Diputar", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
+                const Text(
+                  "Sedang Diputar",
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                ),
                 _buildBorderedIcon(Icons.more_vert, () {
                   print("Menu clicked!");
                 }),
@@ -98,7 +101,10 @@ class _MusicPlayState extends State<MusicPlay> {
                     const SizedBox(height: 25),
                     _buildControls(),
                     const SizedBox(height: 25),
-                    const Text('Isi Buku', style: TextStyle(color: Colors.grey)),
+                    const Text(
+                      'Isi Buku',
+                      style: TextStyle(color: Colors.grey),
+                    ),
                     IconButton(
                       icon: const Icon(Icons.keyboard_arrow_down, size: 30),
                       color: Colors.grey,
@@ -141,13 +147,26 @@ class _MusicPlayState extends State<MusicPlay> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
-            Text(widget.author,
-                style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.grey)),
+            Text(
+              widget.title,
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+            ),
+            Text(
+              widget.author,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
           ],
         ),
         IconButton(
-          icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_outline, size: 24, color: Colors.redAccent),
+          icon: Icon(
+            isFavorite ? Icons.favorite : Icons.favorite_outline,
+            size: 24,
+            color: Colors.redAccent,
+          ),
           onPressed: () => setState(() => isFavorite = !isFavorite),
         ),
       ],
@@ -177,29 +196,39 @@ class _MusicPlayState extends State<MusicPlay> {
   Widget _buildTimeInfo() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _buildTimeText(_position),
-        _buildTimeText(_duration),
-      ],
+      children: [_buildTimeText(_position), _buildTimeText(_duration)],
     );
   }
 
   Widget _buildTimeText(Duration time) {
     final minutes = time.inMinutes;
     final seconds = time.inSeconds.remainder(60).toString().padLeft(2, '0');
-    return Text('$minutes:$seconds',
-        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.grey));
+    return Text(
+      '$minutes:$seconds',
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: Colors.grey,
+      ),
+    );
   }
 
   Widget _buildControls() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(icon: const Icon(Icons.skip_previous, size: 35), color: Colors.grey, onPressed: () {}),
+        IconButton(
+          icon: const Icon(Icons.skip_previous, size: 35),
+          color: Colors.grey,
+          onPressed: () {},
+        ),
         Container(
           width: 50,
           height: 50,
-          decoration: BoxDecoration(color: const Color(0xFF6467F6), borderRadius: BorderRadius.circular(100)),
+          decoration: BoxDecoration(
+            color: const Color(0xFF6467F6),
+            borderRadius: BorderRadius.circular(100),
+          ),
           child: Center(
             child: IconButton(
               icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow, size: 35),
@@ -208,7 +237,11 @@ class _MusicPlayState extends State<MusicPlay> {
             ),
           ),
         ),
-        IconButton(icon: const Icon(Icons.skip_next, size: 35), color: Colors.grey, onPressed: () {}),
+        IconButton(
+          icon: const Icon(Icons.skip_next, size: 35),
+          color: Colors.grey,
+          onPressed: () {},
+        ),
       ],
     );
   }

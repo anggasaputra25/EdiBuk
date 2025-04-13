@@ -116,7 +116,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(9),
-                      child: Image.asset(
+                      child: Image.network(
                         widget.imagePath,
                         width: 120,
                         height: 120,
@@ -261,7 +261,7 @@ class _PlaylistDetailPageState extends State<PlaylistDetailPage> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(4),
-                    child: Image.asset(
+                    child: Image.network(
                       book.coverImage,
                       width: 50,
                       height: 50,
