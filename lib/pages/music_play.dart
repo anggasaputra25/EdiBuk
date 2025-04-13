@@ -23,7 +23,7 @@ class MusicPlay extends StatefulWidget {
 
 class _MusicPlayState extends State<MusicPlay> {
   bool isFavorite = false;
-  AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _audioPlayer = AudioPlayer();
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
   bool _isPlaying = false;

@@ -395,8 +395,18 @@ class _ProfileState extends State<Profile> {
             ),
             SizedBox(height: 28),
             GestureDetector(
-              onTap: () {
-                print('Keluar diklik');
+              onTap: () async {
+                try {
+                  await Supabase.instance.client.auth.signOut();
+                  if (context.mounted) {
+                    Navigator.pushReplacementNamed(context, '/');
+                  }
+                } catch (e) {
+                  print('Logout error: $e');
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Gagal logout. Coba lagi.')),
+                  );
+                }
               },
               child: Row(
                 children: [

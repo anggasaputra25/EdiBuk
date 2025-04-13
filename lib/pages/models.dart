@@ -4,7 +4,7 @@ class Book {
   final String title;
   final String body;
   final String audio;
-  final String authorId;
+  final String authorName;
   final String categoryId;
 
   Book({
@@ -13,7 +13,7 @@ class Book {
     required this.title,
     required this.body,
     required this.audio,
-    required this.authorId,
+    required this.authorName,
     required this.categoryId,
   });
 
@@ -24,7 +24,7 @@ class Book {
       title: json['title'],
       body: json['body'],
       audio: json['audio'],
-      authorId: json['author_id'],
+      authorName: json['authors']['name'],
       categoryId: json['category_id'],
     );
   }

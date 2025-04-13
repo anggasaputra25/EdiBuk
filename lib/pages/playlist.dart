@@ -206,6 +206,7 @@ class _PlaylistPageState extends State<PlaylistPage> {
                           imagePath: playlist.image,
                           playlistName: playlist.name,
                           songCount: playlist.bookCount.toString(),
+                          playlistId: playlist.id,
                         ),
                   ),
                 );
