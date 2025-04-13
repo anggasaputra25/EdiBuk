@@ -208,6 +208,8 @@ class _SearchPageState extends State<SearchPage> {
                           book.coverImage ?? '/',
                           book.title,
                           book.authorName,
+                          book.audio,
+                          book.body,
                         ),
                       );
                     },
