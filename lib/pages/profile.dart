@@ -15,32 +15,32 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   int _selectedIndex = 3;
-  UserProfile? _userProfile;  
+  UserProfile? _userProfile;
 
-  @override  
-  void initState() {  
-    super.initState();  
+  @override
+  void initState() {
+    super.initState();
     _fetchUserProfile();
-  }  
+  }
 
-  Future<void> _fetchUserProfile() async {  
-    UserProfile? profile = await getUserProfile();  
-    setState(() {  
-      _userProfile = profile;  
-    });  
-  }  
+  Future<void> _fetchUserProfile() async {
+    UserProfile? profile = await getUserProfile();
+    setState(() {
+      _userProfile = profile;
+    });
+  }
 
-  Future<UserProfile?> getUserProfile() async {  
-    final user = Supabase.instance.client.auth.currentUser;  
+  Future<UserProfile?> getUserProfile() async {
+    final user = Supabase.instance.client.auth.currentUser;
 
-    if (user == null) return null;  
+    if (user == null) return null;
 
-    return UserProfile(  
-      id: user.id,  
-      username: user.userMetadata?['name'] ?? user.email ?? 'Pengguna',  
-      profileImage: user.userMetadata?['picture'],  
-    );  
-  }  
+    return UserProfile(
+      id: user.id,
+      username: user.userMetadata?['name'] ?? user.email ?? 'Pengguna',
+      profileImage: user.userMetadata?['picture'],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,25 +54,25 @@ class _ProfileState extends State<Profile> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(9),
-                  child: 
-                  Image.network(
-                    _userProfile?.profileImage ?? 'https://via.placeholder.com/50',  
+                  child: Image.network(
+                    _userProfile?.profileImage ??
+                        'https://via.placeholder.com/50',
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,
-                  )
+                  ),
                 ),
                 SizedBox(width: 20),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(  
-                      _userProfile?.username ?? 'Guest',  
-                      style: const TextStyle(  
-                        fontWeight: FontWeight.w700,  
-                        fontSize: 18,  
-                      ),  
-                    ), 
+                    Text(
+                      _userProfile?.username ?? 'Guest',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                      ),
+                    ),
                     Text(
                       'Developer',
                       style: TextStyle(
@@ -88,7 +88,9 @@ class _ProfileState extends State<Profile> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    border: Border.all(color: const Color.fromARGB(20, 6, 14, 0)),
+                    border: Border.all(
+                      color: const Color.fromARGB(20, 6, 14, 0),
+                    ),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: IconButton(
@@ -101,13 +103,14 @@ class _ProfileState extends State<Profile> {
               ],
             ),
             SizedBox(height: 32),
-            Text('Riwayat Mendengarkan', style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600
-            ),),
+            Text(
+              'Riwayat Mendengarkan',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
             SizedBox(height: 18),
             SingleChildScrollView(
-              scrollDirection: Axis.horizontal, // Mengaktifkan scroll horizontal
+              scrollDirection:
+                  Axis.horizontal, // Mengaktifkan scroll horizontal
               child: Row(
                 children: [
                   GestureDetector(
@@ -116,10 +119,17 @@ class _ProfileState extends State<Profile> {
                     },
                     child: Container(
                       width: 170,
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                      margin: EdgeInsets.only(right: 10), // Tambahkan margin untuk jarak antar item
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+                      margin: EdgeInsets.only(
+                        right: 10,
+                      ), // Tambahkan margin untuk jarak antar item
                       decoration: BoxDecoration(
-                        border: Border.all(color: const Color.fromARGB(20, 6, 14, 0)),
+                        border: Border.all(
+                          color: const Color.fromARGB(20, 6, 14, 0),
+                        ),
                         borderRadius: BorderRadius.circular(9),
                       ),
                       child: Row(
@@ -137,20 +147,26 @@ class _ProfileState extends State<Profile> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Hello', style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                              )),
-                              Text('Hello', style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: Colors.grey.shade400,
-                              )),
+                              Text(
+                                'Hello',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                'Hello',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                  color: Colors.grey.shade400,
+                                ),
+                              ),
                             ],
-                          )
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -158,10 +174,17 @@ class _ProfileState extends State<Profile> {
                     },
                     child: Container(
                       width: 170,
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                      margin: EdgeInsets.only(right: 10), // Tambahkan margin untuk jarak antar item
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+                      margin: EdgeInsets.only(
+                        right: 10,
+                      ), // Tambahkan margin untuk jarak antar item
                       decoration: BoxDecoration(
-                        border: Border.all(color: const Color.fromARGB(20, 6, 14, 0)),
+                        border: Border.all(
+                          color: const Color.fromARGB(20, 6, 14, 0),
+                        ),
                         borderRadius: BorderRadius.circular(9),
                       ),
                       child: Row(
@@ -179,20 +202,26 @@ class _ProfileState extends State<Profile> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Hello', style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                              )),
-                              Text('Hello', style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: Colors.grey.shade400,
-                              )),
+                              Text(
+                                'Hello',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                'Hello',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                  color: Colors.grey.shade400,
+                                ),
+                              ),
                             ],
-                          )
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -200,10 +229,17 @@ class _ProfileState extends State<Profile> {
                     },
                     child: Container(
                       width: 170,
-                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                      margin: EdgeInsets.only(right: 10), // Tambahkan margin untuk jarak antar item
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 8,
+                      ),
+                      margin: EdgeInsets.only(
+                        right: 10,
+                      ), // Tambahkan margin untuk jarak antar item
                       decoration: BoxDecoration(
-                        border: Border.all(color: const Color.fromARGB(20, 6, 14, 0)),
+                        border: Border.all(
+                          color: const Color.fromARGB(20, 6, 14, 0),
+                        ),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Row(
@@ -221,20 +257,26 @@ class _ProfileState extends State<Profile> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Hello', style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                              )),
-                              Text('Hello', style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: Colors.grey.shade400,
-                              )),
+                              Text(
+                                'Hello',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                'Hello',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                  color: Colors.grey.shade400,
+                                ),
+                              ),
                             ],
-                          )
+                          ),
                         ],
                       ),
-                    )
+                    ),
                   ),
                 ],
               ),
@@ -248,10 +290,10 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Icon(Icons.person_outline, size: 20, color: Colors.black),
                   SizedBox(width: 12),
-                  Text('Edit Profil', style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600
-                  )),
+                  Text(
+                    'Edit Profil',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
                   Spacer(),
                   Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
                 ],
@@ -264,12 +306,16 @@ class _ProfileState extends State<Profile> {
               },
               child: Row(
                 children: [
-                  Icon(Icons.notifications_outlined, size: 20, color: Colors.black),
+                  Icon(
+                    Icons.notifications_outlined,
+                    size: 20,
+                    color: Colors.black,
+                  ),
                   SizedBox(width: 12),
-                  Text('Notifikasi', style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600
-                  )),
+                  Text(
+                    'Notifikasi',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
                   Spacer(),
                   Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
                 ],
@@ -284,10 +330,10 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Icon(Icons.download_outlined, size: 20, color: Colors.black),
                   SizedBox(width: 12),
-                  Text('Download', style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600
-                  )),
+                  Text(
+                    'Download',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
                   Spacer(),
                   Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
                 ],
@@ -302,10 +348,10 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Icon(Icons.language_outlined, size: 20, color: Colors.black),
                   SizedBox(width: 12),
-                  Text('Bahasa', style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600
-                  )),
+                  Text(
+                    'Bahasa',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
                   Spacer(),
                   Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
                 ],
@@ -320,10 +366,10 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Icon(Icons.help_outline, size: 20, color: Colors.black),
                   SizedBox(width: 12),
-                  Text('Bantuan & Dukungan', style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600
-                  )),
+                  Text(
+                    'Bantuan & Dukungan',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
                   Spacer(),
                   Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
                 ],
@@ -338,10 +384,10 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Icon(Icons.info_outline, size: 20, color: Colors.black),
                   SizedBox(width: 12),
-                  Text('Tentang Kami', style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600
-                  )),
+                  Text(
+                    'Tentang Kami',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                  ),
                   Spacer(),
                   Icon(Icons.arrow_forward_ios, size: 16, color: Colors.black),
                 ],
@@ -354,13 +400,20 @@ class _ProfileState extends State<Profile> {
               },
               child: Row(
                 children: [
-                  Icon(Icons.logout_outlined, size: 20, color: Colors.redAccent),
+                  Icon(
+                    Icons.logout_outlined,
+                    size: 20,
+                    color: Colors.redAccent,
+                  ),
                   SizedBox(width: 12),
-                  Text('Keluar', style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.redAccent
-                  )),
+                  Text(
+                    'Keluar',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.redAccent,
+                    ),
+                  ),
                   Spacer(),
                 ],
               ),
@@ -369,10 +422,10 @@ class _ProfileState extends State<Profile> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, 
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: (index) {
-          if (index != _selectedIndex) { 
+          if (index != _selectedIndex) {
             setState(() {
               _selectedIndex = index;
             });
@@ -402,7 +455,10 @@ class _ProfileState extends State<Profile> {
         items: const [
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.home), label: ''),
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.search), label: ''),
-          BottomNavigationBarItem(icon: Icon(CupertinoIcons.music_note_list), label: ''),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.music_note_list),
+            label: '',
+          ),
           BottomNavigationBarItem(icon: Icon(CupertinoIcons.person), label: ''),
         ],
         selectedItemColor: const Color(0xFF6467F6),
