@@ -1,4 +1,5 @@
-import 'package:edibuk/pages/models.dart';
+import 'package:edibuk/models/author.dart';
+import 'package:edibuk/models/book.dart';
 import 'package:edibuk/pages/book_play.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

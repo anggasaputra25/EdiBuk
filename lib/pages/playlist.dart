@@ -1,5 +1,5 @@
-import 'package:edibuk/pages/home.dart';
-import 'package:edibuk/pages/models.dart';
+import 'package:edibuk/models/playlist.dart';
+import 'package:edibuk/views/home.dart';
 import 'package:edibuk/pages/playlist_detail.dart';
 import 'package:edibuk/pages/search.dart';
 import 'package:flutter/cupertino.dart';
