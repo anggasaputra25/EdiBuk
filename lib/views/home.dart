@@ -1,11 +1,12 @@
 import 'package:edibuk/viewmodels/home.dart';
+import 'package:edibuk/views/bar.dart';
 import 'package:edibuk/widgets/author_card.dart';
 import 'package:edibuk/widgets/book_card.dart';
 import 'package:edibuk/widgets/navigation_bar.dart';
 import 'package:edibuk/widgets/notification_icon.dart';
+import 'package:edibuk/widgets/search_input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:edibuk/pages/bar.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
@@ -38,7 +39,15 @@ class HomePageContent extends StatelessWidget {
                 const SizedBox(height: 20),
                 _buildHeader(viewModel),
                 const SizedBox(height: 16),
-                _buildSearchBar(context),
+                SearchInput(
+                  readOnly: true,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const Bar()),
+                    );
+                  },
+                ),
                 const SizedBox(height: 20),
                 _buildSectionTitle('Baru Diputar'),
                 BookSwiper(books: viewModel.books),
@@ -76,35 +85,6 @@ class HomePageContent extends StatelessWidget {
         ),
         const NotificationIcon(),
       ],
-    );
-  }
-
-  Widget _buildSearchBar(BuildContext context) {
-    return TextField(
-      readOnly: true,
-      onTap:
-          () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const Bar()),
-          ),
-      decoration: InputDecoration(
-        hintText: 'Cari buku',
-        hintStyle: TextStyle(color: Colors.grey.shade600),
-        prefixIcon: Icon(CupertinoIcons.search, color: Colors.grey.shade400),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(9),
-          borderSide: const BorderSide(color: Color.fromARGB(20, 6, 14, 0)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(9),
-          borderSide: const BorderSide(color: Color.fromARGB(20, 6, 14, 0)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(9),
-          borderSide: const BorderSide(color: Color.fromARGB(20, 6, 14, 0)),
-        ),
-        filled: false,
-      ),
     );
   }
 
