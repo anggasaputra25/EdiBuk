@@ -60,7 +60,7 @@ class SearchPageContent extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(currentIndex: 0),
+      bottomNavigationBar: const BottomNavBar(currentIndex: 1),
     );
   }
 
@@ -151,11 +151,19 @@ class SearchPageContent extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         final category = vm.categories[index];
-        final book = vm.books.firstWhere(
-          (book) => book.categoryId == category.id,
-          orElse: () => vm.emptyBook,
+        final matchedBooks =
+            vm.books.where((book) => book.categoryId == category.id).toList();
+
+        final firstImage =
+            matchedBooks.isNotEmpty ? matchedBooks[0].coverImage : null;
+        final secondImage =
+            matchedBooks.length > 1 ? matchedBooks[1].coverImage : null;
+
+        return CategoryCard(
+          title: category.name,
+          imageUrlTop: firstImage,
+          imageUrlBottom: secondImage,
         );
-        return CategoryCard(title: category.name, imageUrl: book.coverImage);
       },
     );
   }
