@@ -3,7 +3,7 @@ import 'package:edibuk/views/home.dart';
 import 'package:edibuk/pages/book_play.dart';
 import 'package:edibuk/pages/playlist.dart';
 import 'package:edibuk/pages/profile.dart';
-import 'package:edibuk/pages/search.dart';
+import 'package:edibuk/views/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

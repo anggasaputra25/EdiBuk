@@ -176,3 +176,43 @@ class BookVerticalList extends StatelessWidget {
     );
   }
 }
+
+class BookCardSearchPage extends StatelessWidget {
+  final Book book;
+  final VoidCallback onTap;
+
+  const BookCardSearchPage({
+    super.key,
+    required this.book,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          AspectRatio(
+            aspectRatio: 3 / 4,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                book.coverImage ?? '/',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            book.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 12),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+}
