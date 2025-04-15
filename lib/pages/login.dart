@@ -1,4 +1,5 @@
 import 'package:edibuk/pages/home.dart';
+import 'package:edibuk/pages/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -280,6 +281,73 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
             ),
+            SizedBox(height: 54),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Belum Mempunyai Akun?',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey.shade400,
+                  ),
+                ),
+                SizedBox(width: 3),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()),
+                    );
+                  },
+                  child: Text(
+                    'Buat Akun',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(height: 26),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    print("'Lupa kata sandi' di klik");
+                  },
+                  child: Text(
+                    'Lupa Kata Sandi?',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Container(
+                  width: 1,
+                  height: 14,
+                  color: Colors.grey.shade400,
+                ),
+                SizedBox(width: 12),
+                GestureDetector(
+                  onTap: () {
+                    print("'Butuh bantuan' di klik");
+                  },
+                  child: Text(
+                    'Butuh Bantuan?',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
