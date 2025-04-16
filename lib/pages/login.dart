@@ -1,4 +1,4 @@
-import 'package:edibuk/pages/home.dart';
+import 'package:edibuk/views/home.dart';
 import 'package:edibuk/pages/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -14,6 +14,8 @@ class LoginPage extends StatefulWidget {
 final supabase = Supabase.instance.client;
 
 class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   bool _isPasswordVisible = false;
   String? _userId;
 
@@ -59,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
 
             // Input Email
             TextField(
+              controller: emailController,
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
               decoration: InputDecoration(
                 hintText: "Masukkan Email",
@@ -81,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
 
             // Input Password
             TextField(
+              controller: passwordController,
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
               obscureText: !_isPasswordVisible,
               decoration: InputDecoration(
@@ -115,11 +119,31 @@ class _LoginPageState extends State<LoginPage> {
 
             // Tombol Login
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                );
+              onPressed: () async {
+                final email = emailController.text.trim();
+                final password = passwordController.text.trim();
+
+                try {
+                  final response = await Supabase.instance.client.auth.signInWithPassword(
+                    email: email,
+                    password: password,
+                  );
+
+                  if (response.user != null) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Email or password is wrong!')),
+                    );
+                  }
+                } catch (error) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error: $error')),
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF6467F6),

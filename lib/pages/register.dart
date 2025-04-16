@@ -1,4 +1,4 @@
-import 'package:edibuk/pages/home.dart';
+import 'package:edibuk/views/home.dart';
 import 'package:edibuk/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -14,6 +14,11 @@ class RegisterPage extends StatefulWidget {
 final supabase = Supabase.instance.client;
 
 class _RegisterPageState extends State<RegisterPage> {
+  final emailController = TextEditingController();
+  final nameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
   bool _isPasswordVisible = false;
   String? _userId;
 
@@ -61,6 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               // Input Email
               TextField(
+                controller: emailController,
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                 decoration: InputDecoration(
                   hintText: "Masukkan Email",
@@ -83,6 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               // Input Name
               TextField(
+                controller: nameController,
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                 decoration: InputDecoration(
                   hintText: "Masukkan Nama",
@@ -105,6 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               // Input Password
               TextField(
+                controller: passwordController,
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                 obscureText: !_isPasswordVisible,
                 decoration: InputDecoration(
@@ -139,6 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               // Confirm Password
               TextField(
+                controller: confirmPasswordController,
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
                 obscureText: !_isPasswordVisible,
                 decoration: InputDecoration(
@@ -173,11 +182,48 @@ class _RegisterPageState extends State<RegisterPage> {
 
               // Tombol Register
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
+                onPressed: () async {
+                  final email = emailController.text.trim();
+                  final name = nameController.text.trim();
+                  final password = passwordController.text;
+                  final confirmPassword = confirmPasswordController.text;
+
+                  if (email.isEmpty || name.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Semua field harus diisi.")),
+                    );
+                    return;
+                  }
+
+                  if (password != confirmPassword) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Password tidak cocok.")),
+                    );
+                    return;
+                  }
+
+                  try {
+                    final response = await supabase.auth.signUp(
+                      email: email,
+                      password: password,
+                      data: {'name': name},
+                    );
+
+                    if (response.user != null) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Registrasi gagal.")),
+                      );
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Error: $e")),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF6467F6),
