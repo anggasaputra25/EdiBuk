@@ -1,10 +1,14 @@
+import 'package:edibuk/models/author.dart';
+import 'package:edibuk/models/book.dart';
+import 'package:edibuk/repositories/author.dart';
+import 'package:edibuk/repositories/book.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/book.dart';
-import '../models/author.dart';
 
 class BarViewModel extends ChangeNotifier {
   final SupabaseClient supabase = Supabase.instance.client;
+  final BookRepository _bookRepository = BookRepository();
+  final AuthorRepository _authorRepository = AuthorRepository();
 
   List<String> searchHistory = [];
   List<Book> books = [];
@@ -13,38 +17,23 @@ class BarViewModel extends ChangeNotifier {
   String searchText = '';
 
   BarViewModel() {
-    fetchBooks();
-    fetchAuthors();
+    loadBarData();
   }
 
-  Future<void> fetchBooks() async {
-    try {
-      final response = await supabase
-          .from('books')
-          .select('id, title, cover_image, audio, body, author_id, category_id, authors(name)');
-      books = List<Map<String, dynamic>>.from(response).map(Book.fromJson).toList();
-      filteredBooks = books;
-      notifyListeners();
-    } catch (e) {
-      debugPrint('Error fetching books: $e');
-    }
-  }
-
-  Future<void> fetchAuthors() async {
-    try {
-      final response = await supabase.from('authors').select('id, name, image');
-      authors = List<Map<String, dynamic>>.from(response).map(Author.fromJson).toList();
-      notifyListeners();
-    } catch (e) {
-      debugPrint('Error fetching authors: $e');
-    }
+  Future<void> loadBarData() async {
+    books = await _bookRepository.fetchBooks();
+    authors = await _authorRepository.fetchAuthors();
+    notifyListeners();
   }
 
   void searchBooks(String query) {
     searchText = query;
-    filteredBooks = books
-        .where((book) => book.title.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+    filteredBooks =
+        books
+            .where(
+              (book) => book.title.toLowerCase().contains(query.toLowerCase()),
+            )
+            .toList();
     notifyListeners();
   }
 
@@ -66,6 +55,9 @@ class BarViewModel extends ChangeNotifier {
   }
 
   Author getAuthorById(String id) {
-    return authors.firstWhere((a) => a.id == id, orElse: () => Author(id: '', name: 'Unknown', image: ''));
+    return authors.firstWhere(
+      (a) => a.id == id,
+      orElse: () => Author(id: '', name: 'Unknown', image: ''),
+    );
   }
 }
