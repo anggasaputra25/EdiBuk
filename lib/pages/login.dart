@@ -134,10 +134,6 @@ class _LoginPageState extends State<LoginPage> {
                       context,
                       MaterialPageRoute(builder: (context) => HomePage()),
                     );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Email or password is wrong!')),
-                    );
                   }
                 } catch (error) {
                   ScaffoldMessenger.of(context).showSnackBar(
